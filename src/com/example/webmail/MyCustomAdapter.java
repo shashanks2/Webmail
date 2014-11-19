@@ -84,7 +84,7 @@ public class MyCustomAdapter extends ArrayAdapter<String>{
 				String f = values.get(pos);
 				int i = f.lastIndexOf("///");
 				f = f.substring(i + 3);
-				Log.e("f", f);
+				
 				if(f.compareTo("flagged") == 0){
 					flag.setImageResource(R.drawable.unflagged);
 					from.setTextColor(Color.BLACK);
@@ -139,9 +139,9 @@ public class MyCustomAdapter extends ArrayAdapter<String>{
 	}
 
 	public void toggleSelection(int position) {
-		Log.e("positon3", Integer.toString(position));
+		
 		selectView(position, !mSelectedItemsIds.get(position));
-		Log.e("positon4", Integer.toString(position));
+		
 	}
 
 	public void removeSelection() {

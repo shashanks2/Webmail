@@ -85,13 +85,13 @@ public class Flag extends IntentService{
 					store.connect(imap_address, username, password);
 				else
 					store.connect(imap_address, Integer.parseInt(imap_port), username, password);
-				Log.e("Message", "Connected");
+				
 				
 				Folder inbox = store.getFolder(folder);
 				inbox.open(Folder.READ_WRITE);
 				int index = intent.getIntExtra("MY_INDEX", -1);
 				index = inbox.getMessageCount() - index;
-				Log.e("index", String.valueOf(index));
+				
 				Message msg = inbox.getMessage(index);
 				String subject = msg.getSubject();
 				if(subject == null || subject.equals("")){
@@ -103,7 +103,7 @@ public class Flag extends IntentService{
 				
 				String dt2 = intent.getStringExtra("DATE");
 				if(dt.compareTo(dt2) == 0){
-					Log.e("CORRECT", "TRUE");
+					
 					inbox.setFlags(new Message[]{msg}, new Flags(Flags.Flag.FLAGGED), intent.getBooleanExtra("FLAG_VALUE", false));
 					taskDone = true;
 					change(index, file_name.get(i), intent.getBooleanExtra("FLAG_VALUE", false));
@@ -112,7 +112,7 @@ public class Flag extends IntentService{
 			}
 			catch(MessagingException e){
 				e.printStackTrace();
-				Log.e("Problem", e.getMessage());
+				
 				break;
 			}
 		}
@@ -144,13 +144,13 @@ public class Flag extends IntentService{
 				Log.e("Copying","true");
 			}
 		} catch (FileNotFoundException e) {
-			Log.e("Exception", "FileNotFound");
+			
 		} catch (EOFException e) {
-			Log.e("Exception", "EOF");
+			
 		} catch(IOException e){
-			Log.e("Exception", "IOException");
+			
 		} catch (ClassNotFoundException e) {
-			Log.e("Exception", "ClassNotFound");
+			
 		}
 		finally{
 			try {
@@ -182,15 +182,15 @@ public class Flag extends IntentService{
 				Log.e("Overwriting","true");
 			}
 			
-			Log.e("Here","true");
+			
 		} catch (FileNotFoundException e) {
-			Log.e("Exception", "FileNotFound");
+			
 		} catch (EOFException e) {
-			Log.e("Exception", "EOF");
+			
 		} catch(IOException e){
-			Log.e("Exception", "IOException");
+			
 		} catch (ClassNotFoundException e) {
-			Log.e("Exception", "ClassNotFound");
+			
 		}
 		finally{
 			try {

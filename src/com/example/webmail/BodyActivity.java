@@ -116,9 +116,7 @@ public class BodyActivity extends ActionBarActivity {
 			if(provider != null){
 				provider.setShareIntent(shareIntent());
 			}
-			else{
-				Log.d("Error", "Share Action Provider is null.");
-			}
+			
 		}
 
 		@Override
@@ -171,12 +169,12 @@ public class BodyActivity extends ActionBarActivity {
 				return true;
 			}
 			if (id == R.id.action_reply) {
-				Log.e("REPLY", "TRUE");
+				
 				Intent intent = new Intent(getActivity(), ComposeActivity.class);
 				TextView from = (TextView) getActivity().findViewById(R.id.from_view);
 				TextView subject = (TextView) getActivity().findViewById(R.id.subject_view);
 				intent.putExtra("SUBJECT", "[Re: " + subject.getText() + " ]");
-				Log.e("FROM", from.getText().toString());
+				
 				intent.putExtra("FROM", from.getText().toString());
 				startActivity(intent);
 				return true;
@@ -206,7 +204,7 @@ public class BodyActivity extends ActionBarActivity {
 			staticPosition = msg_index;
 			final String folder_name = intent.getStringExtra("FOLDER");
 			staticFolder = folder_name;
-			Log.e("index", String.valueOf(msg_index));
+			
 			MessageParcel msg = intent.getParcelableExtra("messageParcel");
 			staticMessageParcel = msg;
 
@@ -250,7 +248,7 @@ public class BodyActivity extends ActionBarActivity {
 			if(attachments.size() != 0){
 				LinearLayout attachmentLayout = (LinearLayout) rootView.findViewById(R.id.attachments);
 
-				Log.e("NO.OF ATTACHMENTS", String.valueOf(attachments.size()));
+				
 				for(int i=0;i<attachments.size();i++){
 					ImageView image = new ImageView(getActivity());
 					image.setLayoutParams(new ViewGroup.LayoutParams(

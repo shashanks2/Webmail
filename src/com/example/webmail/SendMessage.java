@@ -57,7 +57,7 @@ public class SendMessage extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		Log.e("COMPOSEMSG", "STARTED");
+		
 		mHandler.post(new Runnable() {            
 			@Override
 			public void run() {
@@ -94,41 +94,38 @@ public class SendMessage extends IntentService {
 				return new PasswordAuthentication(username, password);
 			}
 		});
-		Log.e("SENTHALF", "TRUE");
+
 		String error = null;
 		Message message = null;
 		try {
-			Log.e("reach", "1");
+			
 			message = new MimeMessage(session);
 			message.setSentDate(new Date());
-			Log.e("reach", "2");
+			
 			
 			message.setFrom(new InternetAddress(username+"@iitp.ac.in"));
-			Log.e("reach", "3");
-			Log.e("to", to);
-			Log.e("cc", cc);
 			
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(to));
-			Log.e("Reached", "4");
+			
 			if(!(cc==null) || !(cc=="") )
 			{
 				message.setRecipients(Message.RecipientType.CC,
 						InternetAddress.parse(cc));
 			}
-			//Log.e("Reached", "5");
+			
 			if(!(bcc==null) || !(bcc=="") )
 			{	
 				message.setRecipients(Message.RecipientType.BCC,
 						InternetAddress.parse(bcc));
 			}
-			Log.e("Reached", "6");
+			
 			message.setSubject(subject);
-			//message.setText(body);
+			
 
 			BodyPart messageBodyPart = new MimeBodyPart();
 			messageBodyPart.setText(body);
-			Log.e("BODY", body);
+			
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(messageBodyPart);
 
@@ -139,7 +136,7 @@ public class SendMessage extends IntentService {
 					String fileName = f.getName();
 
 					String file = p;
-					Log.e("path", file);
+					
 					DataSource source = new FileDataSource(file);
 
 					messageBodyPart = new MimeBodyPart();
@@ -150,7 +147,7 @@ public class SendMessage extends IntentService {
 			}
 			message.setContent(multipart);
 
-			Log.e("sending", "true");
+			
 
 			try{
 				Intent dialogIntent = new Intent(this, MainActivity.class);
@@ -159,7 +156,7 @@ public class SendMessage extends IntentService {
 				dialogIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 				this.startActivity(dialogIntent);
 				Transport.send(message);
-				Log.e("sent", "true");
+				
 				path=null;
 				
 				Properties props2 = new Properties();

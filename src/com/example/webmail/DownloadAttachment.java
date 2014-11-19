@@ -79,7 +79,7 @@ public class DownloadAttachment extends IntentService{
 		password = prefs.getString(getString(R.string.pref_password_key), getString(R.string.pref_password_default));
 
 		String toastMessage = "initial";
-		Log.e("Attachment Index", String.valueOf(attachment_index));
+		
 		Properties props = new Properties();
 		props.setProperty("mail.store.protocol", protocol);
 		try{
@@ -89,14 +89,14 @@ public class DownloadAttachment extends IntentService{
 				store.connect(imap_address, username, password);
 			else
 				store.connect(imap_address, Integer.parseInt(imap_port), username, password);
-			Log.e("Message", "Connected");
+			
 
 			Folder inbox = store.getFolder(folder);
 			inbox.open(Folder.READ_ONLY);
 			index = inbox.getMessageCount() + 1 - index;
-			Log.e("index", String.valueOf(index));
+			
 			Message msg = inbox.getMessage(index);
-			Log.e("SUBJECT", msg.getSubject());
+			
 			Object content = msg.getContent();
 
 			int chk_index = -1;
@@ -105,8 +105,7 @@ public class DownloadAttachment extends IntentService{
 				for(int i=0; i<mp.getCount();i++){
 					Part part = mp.getBodyPart(i);
 					if(part.getFileName() != null || part.getFileName() != ""){
-						//Log.e("filename", part.getFileName());
-						//Log.e("disposition", part.getDisposition());
+						
 						if(part.getDisposition() != null && part.getDisposition().equalsIgnoreCase(Part.ATTACHMENT)){
 							chk_index ++;
 							if(chk_index != attachment_index){
@@ -141,7 +140,7 @@ public class DownloadAttachment extends IntentService{
 							}
 							else{
 								File dir = new File(Environment.getExternalStorageDirectory() + "/WebmailData/");
-								Log.e("DIR", Environment.getExternalStorageDirectory() + "/WebmailData/");
+								
 								if(dir.exists()){
 									File file = new File(Environment.getExternalStorageDirectory() + "/WebmailData/" + part.getFileName());
 									mbp.saveFile(file);

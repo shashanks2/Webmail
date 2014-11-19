@@ -220,7 +220,7 @@ public class DraftsFragment extends Fragment {
 
 						public void onClick(DialogInterface dialog, int whichButton) { 
 							//your deleting code
-							Log.e("DELETE CLICKED", "true");
+							
 							SparseBooleanArray selected = adapter
 									.getSelectedIds();
 							// Captures all selected ids with a loop
@@ -231,7 +231,7 @@ public class DraftsFragment extends Fragment {
 									String selecteditem = adapter
 											.getItem(selected.keyAt(i));
 									// Remove selected items following the ids
-									Log.e("DELETE CLICKED", "true");
+									
 									int p = adapter.getPosition(selecteditem);
 									MessageParcel m = messageParcels[messageParcels.length - 1 - p];
 
@@ -299,16 +299,15 @@ public class DraftsFragment extends Fragment {
 					int position, long id, boolean checked) {
 				// TODO Auto-generated method stub
 				// Capture total checked items
-				Log.e("REACHED", "tue");
+				
 				final int checkedCount = lv.getCheckedItemCount();
 				// Set the CAB title according to total checked items
-				Log.e("checkedcount", Integer.toString(checkedCount));
-				Log.e("positon", Integer.toString(position));
+				
 				mode.setTitle(checkedCount + " Selected");
-				Log.e("positon2", Integer.toString(position));
+				
 				// Calls toggleSelection method from ListViewAdapter Class
 				adapter.toggleSelection(position);
-				Log.e("enter first", "true");
+				
 
 			}
 
@@ -349,24 +348,24 @@ public class DraftsFragment extends Fragment {
 		@Override
 		public void onReceive(Context context, Intent intent)
 		{
-			Log.e("IN RECEIVER", "TRUE");
+			
 			read();
 		}
 	}
 
 	public static void read(){
 		//reading from file
-		Log.e("READING", "TRUE");
+		
 		adapter.clear();
 		ArrayList<MessageParcel> msgPs = new ArrayList<MessageParcel>();
 		try{
 			String path = context.getFilesDir().getPath();
-			Log.e("PATH", path);
+			
 			FileInputStream fs = new FileInputStream(path+"/drafts.ser");
 			ObjectInputStream os = new ObjectInputStream(fs);
 			MessageParcel mp;
 			while((mp = (MessageParcel)os.readObject()) != null){
-				Log.e("Reading...", "true");
+				
 				msgPs.add(mp);
 				String value="";
 
@@ -390,13 +389,13 @@ public class DraftsFragment extends Fragment {
 			}
 
 		} catch (FileNotFoundException e) {
-			Log.e("Exception", "FileNotFound");
+			
 		} catch (EOFException e) {
-			Log.e("Exception", "EOF");
+			
 		} catch(IOException e){
-			Log.e("Exception", "IOException");
+			
 		} catch (ClassNotFoundException e) {
-			Log.e("Exception", "ClassNotFound");
+			
 		}
 		finally{
 			if(msgPs.size() > 0){

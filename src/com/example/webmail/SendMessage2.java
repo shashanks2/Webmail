@@ -46,7 +46,7 @@ public class SendMessage2 extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		Log.e("COMPOSEMSG", "STARTED");
+		
 		mHandler.post(new Runnable() {            
 	        @Override
 	        public void run() {
@@ -84,7 +84,7 @@ public class SendMessage2 extends IntentService {
 				return new PasswordAuthentication(username, password);
 			}
 		});
-		Log.e("SENTHALF", "TRUE");
+		
 		Message message = null;
 		String error = null;
 		try {
@@ -100,7 +100,7 @@ public class SendMessage2 extends IntentService {
 				message.setRecipients(Message.RecipientType.CC,
 						InternetAddress.parse(cc));
 			}
-			//Log.e("Reached", "5");
+			
 			if(!(bcc==null) || !(bcc=="") )
 			{	
 				message.setRecipients(Message.RecipientType.BCC,
@@ -108,11 +108,11 @@ public class SendMessage2 extends IntentService {
 			}
 
 			message.setSubject(subject);
-			//message.setText(body);
+			
 
 			BodyPart messageBodyPart = new MimeBodyPart();
 			messageBodyPart.setText(body);
-			Log.e("BODY", body);
+			
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(messageBodyPart);
 
@@ -135,7 +135,7 @@ public class SendMessage2 extends IntentService {
 			}
 			message.setContent(multipart);
 
-			Log.e("sending", "true");
+			
 			//System.out.println("Sent message successfully....");
 			
 			try{
@@ -145,13 +145,13 @@ public class SendMessage2 extends IntentService {
 				dialogIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 				this.startActivity(dialogIntent);
 				Transport.send(message);
-				Log.e("sent", "true");
+				
 				path=null;
 			}
 			catch(Exception e)
 			{
 				path=null;
-				Log.e("error", e.toString());
+				
 				error = "Sending Failed";
 			}
 

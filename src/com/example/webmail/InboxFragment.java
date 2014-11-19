@@ -263,7 +263,7 @@ public class InboxFragment extends Fragment {
 
 						public void onClick(DialogInterface dialog, int whichButton) { 
 							//your deleting code
-							Log.e("DELETE CLICKED", "true");
+							
 							SparseBooleanArray selected = adapter
 									.getSelectedIds();
 							// Captures all selected ids with a loop
@@ -274,7 +274,7 @@ public class InboxFragment extends Fragment {
 									String selecteditem = adapter
 											.getItem(selected.keyAt(i));
 									// Remove selected items following the ids
-									Log.e("DELETE CLICKED", "true");
+									
 									int p = adapter.getPosition(selecteditem);
 									MessageParcel m = messageParcels[messageParcels.length - 1 - p];
 
@@ -341,16 +341,16 @@ public class InboxFragment extends Fragment {
 					int position, long id, boolean checked) {
 				// TODO Auto-generated method stub
 				// Capture total checked items
-				Log.e("REACHED", "tue");
+				
 				final int checkedCount = lv.getCheckedItemCount();
 				// Set the CAB title according to total checked items
-				Log.e("checkedcount", Integer.toString(checkedCount));
-				Log.e("positon", Integer.toString(position));
+				
+				
 				mode.setTitle(checkedCount + " Selected");
-				Log.e("positon2", Integer.toString(position));
+				
 				// Calls toggleSelection method from ListViewAdapter Class
 				adapter.toggleSelection(position);
-				Log.e("enter first", "true");
+				
 
 			}
 
@@ -367,7 +367,7 @@ public class InboxFragment extends Fragment {
 
 				if(msg.getRead() == 0){
 					Intent setRead = new Intent(getActivity(), SetRead.class);
-					Log.e("MY_INDEX", String.valueOf(position));
+					
 					setRead.putExtra("MY_INDEX", position);
 					setRead.putExtra("FOLDER", "Inbox");
 					setRead.putExtra("messageParcel", (Parcelable)msg);
@@ -402,7 +402,7 @@ public class InboxFragment extends Fragment {
 	public static int read(){
 		int top_unread = 0;
 		//reading from file
-		Log.e("READING", "TRUE");
+		
 		adapter.clear();
 		ArrayList<MessageParcel> msgPs = new ArrayList<MessageParcel>();
 		try{
@@ -412,12 +412,12 @@ public class InboxFragment extends Fragment {
 			ObjectInputStream os = new ObjectInputStream(fs);
 			MessageParcel mp;
 			while((mp = (MessageParcel)os.readObject()) != null){
-				Log.e("Reading...", "true");
+				
 				msgPs.add(mp);
 				String value="";
 
 				value += mp.getFrom();
-				Log.e("SUB", mp.getSub());
+				
 				value += "///" + mp.getDate();
 				value += "///" + mp.getSub();
 
@@ -437,13 +437,13 @@ public class InboxFragment extends Fragment {
 			}
 
 		} catch (FileNotFoundException e) {
-			Log.e("Exception", "FileNotFound");
+			
 		} catch (EOFException e) {
-			Log.e("Exception", "EOF");
+			
 		} catch(IOException e){
-			Log.e("Exception", "IOException");
+			
 		} catch (ClassNotFoundException e) {
-			Log.e("Exception", "ClassNotFound");
+			
 		}
 		finally{
 			if(msgPs.size() > 0){
@@ -470,7 +470,7 @@ public class InboxFragment extends Fragment {
 		@Override
 		public void onReceive(Context context, Intent intent)
 		{
-			Log.e("IN RECEIVER", "TRUE");
+			
 			int unread = read();
 
 			if(unread != 0){
@@ -495,9 +495,9 @@ public class InboxFragment extends Fragment {
 				else
 					notif_text = unread + " new messages.";
 
-				Log.e("isInForeground", String.valueOf(isInForeground));
+				
 				if(!isInForeground && needNotification.equalsIgnoreCase("on")){
-					Log.e("Notification", "true");
+					
 					Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.notify);
 
 					NotificationCompat.Builder mBuilder = 

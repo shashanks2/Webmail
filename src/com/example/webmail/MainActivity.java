@@ -125,7 +125,7 @@ public class MainActivity extends ActionBarActivity {
 
 			@Override
 			public void onClick(View v) {
-				Log.e("CLICKED", "SETTINGS");
+				
 				Intent intent = new Intent(staticContext, SettingsActivity.class);
 				startActivity(intent);
 			}
@@ -230,12 +230,12 @@ public class MainActivity extends ActionBarActivity {
 		if(intent != null && intent.getExtras() != null && intent.getExtras().containsKey("NOTIF")){
 			notif_open = true;
 		}
-		Log.e("NOTIF", String.valueOf(notif_open));
+		
 		if(notif_open)
 			fragmentName = "Inbox";
 		getSupportActionBar().setTitle(fragmentName);
 		
-		Log.e("FRAGMENT-NAME", fragmentName);
+		
 
 		if (savedInstanceState == null || notif_open) {
 			if(fragmentName.compareTo("Inbox") == 0){
@@ -300,7 +300,6 @@ public class MainActivity extends ActionBarActivity {
 
 	@Override
 	public void onBackPressed() {
-		Log.e("BACK PRESSED", "TRUE");
 	    fragmentName = "Inbox";
 	    moveTaskToBack(true);
 	}

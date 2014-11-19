@@ -49,7 +49,7 @@ public class Sync extends IntentService{
 		String folder = intent.getStringExtra("FOLDER");
 		
 
-		Log.e("SYNC SERVICE STARTED", "true");
+		
 
 		Properties props = new Properties();
 		props.setProperty("mail.store.protocol", protocol);
@@ -61,10 +61,10 @@ public class Sync extends IntentService{
 				store.connect(imap_address, username, password);
 			else
 				store.connect(imap_address, Integer.parseInt(imap_port), username, password);
-			Log.e("Message", "Connected");
+			
 			Folder[] list = store.getDefaultFolder().list();
 			for(Folder d: list){
-				Log.v("Names", d.getFullName());
+				
 			}
 			Folder inbox = store.getFolder(folder);
 			inbox.open(Folder.READ_ONLY);
@@ -80,7 +80,7 @@ public class Sync extends IntentService{
 			{
 				Message msg=message[i];
 				MessageParcel mp = new MessageParcel(msg);
-				Log.e("index", String.valueOf(i));
+				
 				messageParcelsTemp[i] = mp;
 			}
 
@@ -91,9 +91,9 @@ public class Sync extends IntentService{
 					break;
 				}
 			}
-			Log.e("end_index", String.valueOf(end_index));
+			
 			int new_length = end_index+1;
-			Log.e("message.length", String.valueOf(message.length));
+			
 			if(new_length != message.length){
 				messageParcelsTemp = null;
 			}
@@ -105,7 +105,7 @@ public class Sync extends IntentService{
 			onComplete(arr, intent.getStringExtra("FILE_NAME"), intent.getBooleanExtra("NOTIF_UNFLAG", false));
 		}
 		catch(AuthenticationFailedException e){
-			Log.e("ERROR", e.getMessage());
+			
 			Object arr[] = new Object[2];
 			arr[0] = false;
 			arr[1] = "Authentication Failure";
@@ -113,7 +113,7 @@ public class Sync extends IntentService{
 			
 		}
 		catch (MessagingException mex) {
-			Log.e("ERROR", mex.getMessage());
+			
 			Object arr[] = new Object[2];
 			arr[0] = false;
 			arr[1] = "No Connection";
@@ -124,11 +124,11 @@ public class Sync extends IntentService{
 	public void onComplete(Object[] obj, String file_name, boolean notif_unflag){
 		
 		final Context context = getApplicationContext();
-		Log.e("file_name", file_name);
+		
 
 		boolean val = (Boolean)obj[0];
 		final String msg = (String)obj[1];
-		Log.e("notif_unflag", String.valueOf(notif_unflag));
+		
 		if(!val && !notif_unflag){
 			mHandler.post(new Runnable() {            
 				@Override
@@ -138,9 +138,9 @@ public class Sync extends IntentService{
 			});
 		}
 		else if(messageParcelsTemp != null && messageParcelsTemp.length != 0){
-			Log.e("onPostExceute", "true");
+			
 			if(message != null){
-				Log.e("Total", String.valueOf(message.length));
+				
 				String path = context.getFilesDir().getPath();
 				try{
 					FileOutputStream fs = new FileOutputStream(path+"/"+file_name+"_updated.ser") ;
@@ -152,19 +152,19 @@ public class Sync extends IntentService{
 						MessageParcel mp = messageParcelsTemp[i];
 						// writing serialized objects
 						os.writeObject(mp);
-						Log.e("Writing...", "true");
-						Log.e("SUB", mp.getSub());
+						
+						
 					}
 					os.close();
 				}
 				catch(NetworkOnMainThreadException e){
-					Log.e("Exception1", "NetworkOnMainThread");
+					
 				} catch (FileNotFoundException e1) {
-					Log.e("Exception1", "FileNotFound");
+					
 				} catch (EOFException e2) {
-					Log.e("Exception1", "EOF");
+					
 				} catch (IOException e2) {
-					Log.e("Exception1", "IOException");
+					
 				}
 				finally{
 					ArrayList<MessageParcel> messageParcelsTotal = new ArrayList<MessageParcel>();
@@ -178,20 +178,20 @@ public class Sync extends IntentService{
 						MessageParcel msgPar;
 						while((msgPar = (MessageParcel)os2.readObject()) != null){
 							os.writeObject(msgPar);
-							Log.e("COPYING", msgPar.getSub());
-							Log.e("SUB", msgPar.getSub());
+							
+							
 						}
 						os.close();
 						os2.close();
 
 					} catch (FileNotFoundException e) {
-						Log.e("Exception2", "FileNotFound");
+						
 					} catch (EOFException e) {
-						Log.e("Exception2", "EOF");
+						
 					} catch (IOException e) {
-						Log.e("Exception2", "IOException");
+						
 					} catch (ClassNotFoundException e) {
-						Log.e("Exception2", "ClassNotFound");
+						
 					}
 					finally{
 						Intent i = new Intent("com.example.webmail."+file_name);

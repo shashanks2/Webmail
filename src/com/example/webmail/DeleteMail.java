@@ -80,7 +80,7 @@ public class DeleteMail extends IntentService{
 				store.connect(imap_address, username, password);
 			else
 				store.connect(imap_address, Integer.parseInt(imap_port), username, password);
-			Log.e("Message", "Connected");
+			
 
 			Folder inbox = store.getFolder(folder);
 			inbox.open(Folder.READ_WRITE);
@@ -89,7 +89,7 @@ public class DeleteMail extends IntentService{
 
 			int index = intent.getIntExtra("MY_INDEX", -1);
 			index = inbox.getMessageCount() - index;
-			Log.e("index", String.valueOf(index));
+			
 			Message msg = inbox.getMessage(index);
 			String subject = msg.getSubject();
 			if(subject == null || subject.equals("")){
@@ -100,13 +100,13 @@ public class DeleteMail extends IntentService{
 			String dt = date_parts[0] + "\n" + date_parts[1]+" "+date_parts[2] + "\n" +date_parts[3].substring(0, date_parts[3].lastIndexOf(":"));
 			MessageParcel msgParcel = intent.getParcelableExtra("messageParcel");
 			if(subject.compareTo(msgParcel.getSub()) == 0 && dt.compareTo(msgParcel.getDate()) == 0){
-				Log.e("Found", "true");
+				
 				if(folder.compareTo(trash_folder) != 0){
 					inbox.copyMessages(new Message[]{msg}, trash);
-					Log.e("Copied", "true");
+					
 				}
 				inbox.setFlags(new Message[]{msg}, new Flags(Flags.Flag.DELETED), true);
-				Log.e("Removed", "true");
+				
 				mHandler.post(new Runnable() {            
 					@Override
 					public void run() {
@@ -120,7 +120,7 @@ public class DeleteMail extends IntentService{
 				dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				dialogIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 				this.startActivity(dialogIntent);
-				Log.e("DELETED", "true");
+				
 			}
 			else{
 				mHandler.post(new Runnable() {            
@@ -152,22 +152,22 @@ public class DeleteMail extends IntentService{
 			MessageParcel mp;
 			while((mp = (MessageParcel)os.readObject()) != null){
 				if(mp.equals(msg)){
-					Log.e("Deleted","true");
+					
 					continue;
 				}
 				os2.writeObject(mp);
-				Log.e("Copying","true");
+				
 			}
 			os.close();
 			os2.close();
 		} catch (FileNotFoundException e) {
-			Log.e("Exception", "FileNotFound");
+			
 		} catch (EOFException e) {
-			Log.e("Exception", "EOF");
+			
 		} catch(IOException e){
-			Log.e("Exception", "IOException");
+			
 		} catch (ClassNotFoundException e) {
-			Log.e("Exception", "ClassNotFound");
+			
 		}
 		try{
 			String path = getApplicationContext().getFilesDir().getPath();
@@ -180,19 +180,19 @@ public class DeleteMail extends IntentService{
 			MessageParcel mp;
 			while((mp = (MessageParcel)os.readObject()) != null){
 				os2.writeObject(mp);
-				Log.e("Overwriting","true");
+				
 			}
 			os.close();
 			os2.close();
-			Log.e("Here","true");
+			
 		} catch (FileNotFoundException e) {
-			Log.e("Exception", "FileNotFound");
+			
 		} catch (EOFException e) {
-			Log.e("Exception", "EOF");
+			
 		} catch(IOException e){
-			Log.e("Exception", "IOException");
+			
 		} catch (ClassNotFoundException e) {
-			Log.e("Exception", "ClassNotFound");
+			
 		}
 
 	}

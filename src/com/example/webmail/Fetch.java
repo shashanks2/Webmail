@@ -47,7 +47,7 @@ public class Fetch extends IntentService{
 		String folder = intent.getStringExtra("FOLDER");
 		int count = intent.getIntExtra("COUNT", 0);
 
-		Log.e("FETCH SERVICE STARTED", "true");
+		
 		Properties props = new Properties();
 		props.setProperty("mail.store.protocol", protocol);
 		try {
@@ -57,14 +57,14 @@ public class Fetch extends IntentService{
 				store.connect(imap_address, username, password);
 			else
 				store.connect(imap_address, Integer.parseInt(imap_port), username, password);
-			Log.e("Message", "Connected");
+			
 
 			Folder inbox = store.getFolder(folder);
 			inbox.open(Folder.READ_ONLY);
 
 			int messageCount = inbox.getMessageCount();
 			int deletedCount = inbox.getDeletedMessageCount();
-			Log.e("Deleted Count", String.valueOf(deletedCount));
+			
 
 			int startCount = messageCount - (count + 4);
 			if(startCount < 1)
@@ -77,7 +77,7 @@ public class Fetch extends IntentService{
 			{
 				Message msg=message[i];
 				MessageParcel mp = new MessageParcel(msg);
-				Log.e("index", String.valueOf(i));
+				
 				messageParcelsTemp[i] = mp;
 			}
 
@@ -88,9 +88,9 @@ public class Fetch extends IntentService{
 					break;
 				}
 			}
-			Log.e("end_index", String.valueOf(end_index));
+			
 			int new_length = end_index+1;
-			Log.e("message.length", String.valueOf(message.length));
+			
 			if(new_length != message.length){
 				messageParcelsTemp = null;
 			}
@@ -101,7 +101,7 @@ public class Fetch extends IntentService{
 			onComplete(arr, intent.getStringExtra("FILE_NAME"));
 
 		} catch(AuthenticationFailedException e){
-			Log.e("ERROR", e.getMessage());
+			
 			Object arr[] = new Object[2];
 			arr[0] = false;
 			arr[1] = "Authentication Failure";
@@ -109,7 +109,7 @@ public class Fetch extends IntentService{
 		}
 		
 		catch (MessagingException mex) {
-			Log.e("ERROR", mex.getMessage());
+			
 			Object arr[] = new Object[2];
 			arr[0] = false;
 			arr[1] = "No Connection";
@@ -133,9 +133,9 @@ public class Fetch extends IntentService{
 		}
 		else if(messageParcelsTemp != null && messageParcelsTemp.length != 0){
 
-			Log.e("onPostExceute", "true");
+			
 			if(message != null){
-				Log.e("Total", String.valueOf(message.length));
+				
 				String path = context.getFilesDir().getPath();
 				try{
 					FileOutputStream fs = new FileOutputStream(path+"/"+file_name+"_updated.ser") ;
@@ -148,18 +148,18 @@ public class Fetch extends IntentService{
 
 						// writing serialized objects
 						os.writeObject(mp);
-						Log.e("Writing...", "true");
+						
 					}
 					os.close();
 				}
 				catch(NetworkOnMainThreadException e){
-					Log.e("Exception1", "NetworkOnMainThread");
+					
 				} catch (FileNotFoundException e1) {
-					Log.e("Exception1", "FileNotFound");
+					
 				} catch (EOFException e2) {
-					Log.e("Exception1", "EOF");
+					
 				} catch (IOException e2) {
-					Log.e("Exception1", "IOException");
+					
 				}
 				finally{
 					ArrayList<MessageParcel> messageParcelsTotal = new ArrayList<MessageParcel>();
@@ -178,13 +178,13 @@ public class Fetch extends IntentService{
 						os2.close();
 
 					} catch (FileNotFoundException e) {
-						Log.e("Exception2", "FileNotFound");
+						
 					} catch (EOFException e) {
-						Log.e("Exception2", "EOF");
+						
 					} catch (IOException e) {
-						Log.e("Exception2", "IOException");
+						
 					} catch (ClassNotFoundException e) {
-						Log.e("Exception2", "ClassNotFound");
+						
 					}
 					finally{
 						Intent i = new Intent("com.example.webmail."+file_name);

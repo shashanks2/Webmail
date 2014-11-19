@@ -146,7 +146,7 @@ public class ComposeActivity extends ActionBarActivity {
 					
 					@Override
 					public void onClick(View arg0) {
-						Log.e("REMOVE", delname);
+						
 						path.remove(path.indexOf(delname));
 						rem.setVisibility(View.GONE);
 					}
@@ -168,17 +168,17 @@ public class ComposeActivity extends ActionBarActivity {
 					if (data != null) {
 						// Get the URI of the selected file
 						final Uri uri = data.getData();
-						Log.i(TAG, "Uri = " + uri.toString());
+						
 						try {
 							// Get the file path from the URI
 							if(path == null)
 								path = new ArrayList<String>();
 							path.add(FileUtils.getPath(MainActivity.getAppContext(), uri));
-							Log.e("PATHHHHHHHHHHHHHHHh", path.get(path.size()-1));
+							
 							showAttachments(path.get(path.size()-1));
 
 						} catch (Exception e) {
-							Log.e("FileSelectorTestActivity", "File select error", e);
+							
 						}
 					}
 				}

@@ -63,7 +63,7 @@ public class MessageParcel implements Parcelable, Serializable{
 			
 			// adding date
 			this.date = msg.getSentDate().toString();
-			Log.e("DATE", date);
+			
 			String date_parts[] = this.date.split(" ");
 			String dt = date_parts[0] + "\n" + date_parts[1]+" "+date_parts[2] + "\n" +date_parts[3].substring(0, date_parts[3].lastIndexOf(":"));
 			this.date = dt;
@@ -75,7 +75,7 @@ public class MessageParcel implements Parcelable, Serializable{
 			else
 				this.subject = "no subject";
 			
-			Log.e("SUBJECT", this.subject);
+			
 			//adding body
 			this.body = " ";
 			Object content = msg.getContent();
@@ -83,7 +83,7 @@ public class MessageParcel implements Parcelable, Serializable{
 				Multipart mp = (Multipart) content;
 				for(int i=0; i<mp.getCount();i++){
 					Part part = mp.getBodyPart(i);
-					//Log.e("MIME-TYPE" + String.valueOf(i), part.getContentType());
+					
 					if((part.getFileName() == null || part.getFileName() == "") && ((part.isMimeType("text/plain") || part.isMimeType("multipart/ALTERNATIVE")))){
 						try{
 							content = part.getContent();
@@ -91,14 +91,14 @@ public class MessageParcel implements Parcelable, Serializable{
 						catch(Exception e){
 							content = "";
 						}
-						Log.e("PLAIN/TEXT", "true");
+						
 					}
 					else if(part.getFileName() != null || part.getFileName() != ""){
 						if(part.getDisposition() != null && part.getDisposition().equalsIgnoreCase(Part.ATTACHMENT)){
 							MimeBodyPart mbp = (MimeBodyPart)part;
 							attachments.add(part.getFileName());
 							sizes.add(String.valueOf(part.getSize()));
-							Log.e("Attachment Found", "true");
+							
 						}
 					}
 				}
@@ -108,7 +108,7 @@ public class MessageParcel implements Parcelable, Serializable{
 							Part part = ((Multipart)content).getBodyPart(i);
 							if(part.isMimeType("text/plain")){
 								content = part.getContent();
-								Log.e("PLAIN/TEXT 2", "true");
+								
 								break;
 							}
 						}
@@ -132,10 +132,10 @@ public class MessageParcel implements Parcelable, Serializable{
 			in = msg.getRecipients(RecipientType.TO);
 			if(in == null){
 				to = "";
-				Log.e("in NOT NULL", "true");
+				
 			}
 			else{
-				Log.e("in NOT NULL", "true");
+				
 				for (Address address : in) {
 					value += " " + address.toString();
 				}
@@ -198,8 +198,8 @@ public class MessageParcel implements Parcelable, Serializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Log.e("FROM", this.from);
-		Log.e("TO", this.to);
+		
+		
 	}
 	public void setRead(int read){
 		this.read = read;

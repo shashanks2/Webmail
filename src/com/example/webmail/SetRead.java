@@ -74,13 +74,13 @@ public class SetRead extends IntentService{
 				store.connect(imap_address, username, password);
 			else
 				store.connect(imap_address, Integer.parseInt(imap_port), username, password);
-			Log.e("Message", "Connected");
+			
 			
 			Folder inbox = store.getFolder(folder);
 			inbox.open(Folder.READ_WRITE);
 			int index = intent.getIntExtra("MY_INDEX", -1);
 			index = inbox.getMessageCount() - index;
-			Log.e("index", String.valueOf(index));
+			
 			Message msg = inbox.getMessage(index);
 			String subject = msg.getSubject();
 			if(subject == null || subject.equals("")){
@@ -98,10 +98,10 @@ public class SetRead extends IntentService{
 		}
 		catch(MessagingException e){
 			e.printStackTrace();
-			Log.e("Problem", e.getMessage());
+			
 		}
 		finally{
-			Log.e("READ", "true");
+			
 		}
 	}
 
@@ -127,13 +127,13 @@ public class SetRead extends IntentService{
 				Log.e("Copying","true");
 			}
 		} catch (FileNotFoundException e) {
-			Log.e("Exception", "FileNotFound");
+			
 		} catch (EOFException e) {
-			Log.e("Exception", "EOF");
+			
 		} catch(IOException e){
-			Log.e("Exception", "IOException");
+			
 		} catch (ClassNotFoundException e) {
-			Log.e("Exception", "ClassNotFound");
+			
 		}
 		finally{
 			try {
@@ -164,15 +164,15 @@ public class SetRead extends IntentService{
 				os2.writeObject(mp);
 				Log.e("Overwriting","true");
 			}
-			Log.e("Here","true");
+			
 		} catch (FileNotFoundException e) {
-			Log.e("Exception", "FileNotFound");
+			
 		} catch (EOFException e) {
-			Log.e("Exception", "EOF");
+			
 		} catch(IOException e){
-			Log.e("Exception", "IOException");
+			
 		} catch (ClassNotFoundException e) {
-			Log.e("Exception", "ClassNotFound");
+			
 		}
 		finally{
 			try {
